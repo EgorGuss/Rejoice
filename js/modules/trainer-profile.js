@@ -22,21 +22,77 @@ export const TrainerProfile = (() => {
         return;
       }
 
+      // Получаем статистику тренера
+      const allSchedules = await Data.getSchedules();
+      const trainerSchedules = allSchedules.filter(s => String(s.id_trainer) === String(trainerId));
+      const allBookings = await Data.getBookings();
+      const trainerBookings = allBookings.filter(b => {
+        const schedule = trainerSchedules.find(s => String(s.id) === String(b.id_schedule));
+        return schedule && b.status === 'Confirmed';
+      });
+      const upcomingSchedules = trainerSchedules.filter(s => new Date(s.date_time) >= new Date());
+
       const profileDiv = document.getElementById('trainerProfile');
       profileDiv.innerHTML = `
-        <div class="card" style="padding:30px;">
-          <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:start;">
+        <div class="card" style="padding:40px;margin-bottom:30px;">
+          <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:start;">
             <div style="flex-shrink:0;">
-              <div style="width:200px;height:200px;background:#f5f5f5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:80px;color:#888;margin-bottom:20px;">
+              <div style="width:220px;height:220px;background:linear-gradient(135deg, var(--accent), var(--accent-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:90px;color:white;font-weight:bold;box-shadow: 0 8px 20px rgba(0,0,0,0.15);margin-bottom:20px;">
                 ${trainer.name ? trainer.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'T'}
               </div>
             </div>
             <div style="flex:1;min-width:300px;">
-              <h2 style="margin:0 0 15px 0;">${trainer.name}</h2>
-              ${trainer.specialization ? `<p><strong>Специализация:</strong> ${trainer.specialization}</p>` : ''}
-              ${trainer.experience ? `<p><strong>Опыт:</strong> ${trainer.experience} лет</p>` : ''}
-              ${trainer.rating ? `<p><strong>Рейтинг:</strong> ${'★'.repeat(Math.floor(trainer.rating))}${'☆'.repeat(5 - Math.floor(trainer.rating))} (${trainer.rating})</p>` : ''}
-              ${trainer.bio ? `<p><strong>О себе:</strong> ${trainer.bio}</p>` : ''}
+              <h2 style="margin:0 0 20px 0;color:var(--accent-dark);font-size:32px;">${trainer.name}</h2>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:20px;margin-bottom:25px;">
+                ${trainer.specialization ? `
+                  <div style="padding:15px;background:var(--bg-light);border-radius:8px;">
+                    <p style="margin:0;color:#666;font-size:14px;margin-bottom:5px;">Специализация</p>
+                    <p style="margin:0;font-weight:bold;color:var(--black);">${trainer.specialization}</p>
+                  </div>
+                ` : ''}
+                ${trainer.experience ? `
+                  <div style="padding:15px;background:var(--bg-light);border-radius:8px;">
+                    <p style="margin:0;color:#666;font-size:14px;margin-bottom:5px;">Опыт работы</p>
+                    <p style="margin:0;font-weight:bold;color:var(--black);">${trainer.experience} ${trainer.experience === 1 ? 'год' : trainer.experience < 5 ? 'года' : 'лет'}</p>
+                  </div>
+                ` : ''}
+                ${trainer.rating ? `
+                  <div style="padding:15px;background:var(--bg-light);border-radius:8px;">
+                    <p style="margin:0;color:#666;font-size:14px;margin-bottom:5px;">Рейтинг</p>
+                    <p style="margin:0;font-weight:bold;color:var(--black);">
+                      ${'★'.repeat(Math.floor(trainer.rating))}${'☆'.repeat(5 - Math.floor(trainer.rating))} ${trainer.rating}
+                    </p>
+                  </div>
+                ` : ''}
+                <div style="padding:15px;background:var(--bg-light);border-radius:8px;">
+                  <p style="margin:0;color:#666;font-size:14px;margin-bottom:5px;">Предстоящих занятий</p>
+                  <p style="margin:0;font-weight:bold;color:var(--black);">${upcomingSchedules.length}</p>
+                </div>
+              </div>
+              ${trainer.bio ? `
+                <div style="margin-top:20px;padding:20px;background:var(--bg-light);border-radius:8px;border-left:4px solid var(--accent);">
+                  <p style="margin:0;color:#666;font-size:14px;margin-bottom:10px;font-weight:bold;">О тренере</p>
+                  <p style="margin:0;color:var(--black);line-height:1.6;">${trainer.bio}</p>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" style="padding:30px;margin-bottom:30px;">
+          <h3 style="margin:0 0 20px 0;color:var(--accent-dark);">Статистика</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));gap:20px;">
+            <div style="text-align:center;padding:20px;background:linear-gradient(135deg, #f5f5f5, #e8e8e8);border-radius:10px;">
+              <p style="margin:0;font-size:36px;font-weight:bold;color:var(--accent);">${trainerSchedules.length}</p>
+              <p style="margin:5px 0 0 0;color:#666;font-size:14px;">Всего занятий</p>
+            </div>
+            <div style="text-align:center;padding:20px;background:linear-gradient(135deg, #f5f5f5, #e8e8e8);border-radius:10px;">
+              <p style="margin:0;font-size:36px;font-weight:bold;color:var(--accent);">${trainerBookings.length}</p>
+              <p style="margin:5px 0 0 0;color:#666;font-size:14px;">Записей клиентов</p>
+            </div>
+            <div style="text-align:center;padding:20px;background:linear-gradient(135deg, #f5f5f5, #e8e8e8);border-radius:10px;">
+              <p style="margin:0;font-size:36px;font-weight:bold;color:var(--accent);">${upcomingSchedules.length}</p>
+              <p style="margin:5px 0 0 0;color:#666;font-size:14px;">Предстоящих</p>
             </div>
           </div>
         </div>

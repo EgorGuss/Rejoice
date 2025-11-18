@@ -269,11 +269,29 @@ export const Schedule = (() => {
       return;
     }
 
-    const activeSubscription = await getActiveSubscription();
+    let activeSubscription = await getActiveSubscription();
+    
+    // Если нет активного абонемента, создаём подарковый
     if (!activeSubscription) {
-      UI.showNotification('Нужен активный абонемент. Перейдите в профиль, чтобы купить.');
-      window.location.href = 'profile.html#subscriptions';
-      return;
+      UI.showNotification('Поздравляем! Мы дарим вам абонемент на 10 занятий! 🎁');
+      
+      const giftSubscription = {
+        type: 'Подарочный (10 занятий)',
+        sessions_total: 10,
+        sessions_left: 10,
+        start_date: new Date().toISOString().split('T')[0],
+        end_date: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // +90 дней
+        price: 0,
+        id_client: Auth.currentUser.id
+      };
+      
+      const newSubscription = await Data.addSubscription(giftSubscription);
+      if (newSubscription) {
+        activeSubscription = newSubscription;
+      } else {
+        UI.showNotification('Ошибка создания абонемента. Попробуйте позже.');
+        return;
+      }
     }
 
     const alreadyBooked = await Data.getBookingByScheduleAndClient(
@@ -338,7 +356,11 @@ export const Schedule = (() => {
   };
 
   const getActiveSubscription = async () => {
+    if (!Auth.currentUser) return null;
+    
     const subscriptions = await Data.getSubscriptionsByClientId(Auth.currentUser.id);
+    if (!subscriptions || subscriptions.length === 0) return null;
+    
     const now = new Date();
 
     return (

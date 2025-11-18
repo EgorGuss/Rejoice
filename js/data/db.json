@@ -20,11 +20,40 @@
       "rating": 4.8
     },
     {
+      "id": 4,
+      "login": "trainer2@rejoice.ru",
+      "password": "123456",
+      "role": "trainer",
+      "name": "Елена Козлова",
+      "specialization": "Классический пилатес",
+      "experience": 7,
+      "rating": 4.9
+    },
+    {
+      "id": 5,
+      "login": "trainer3@rejoice.ru",
+      "password": "123456",
+      "role": "trainer",
+      "name": "Анна Смирнова",
+      "specialization": "Пилатес для спины",
+      "experience": 4,
+      "rating": 4.7
+    },
+    {
       "id": 3,
       "login": "admin@rejoice.ru",
       "password": "123456",
       "role": "admin",
       "name": "Иван Петров"
+    },
+    {
+      "id": "1208",
+      "login": "gap2006@bk.ru",
+      "password": "123456",
+      "role": "client",
+      "name": "Егор",
+      "email": "gap2006@bk.ru",
+      "phone": "9254577759"
     }
   ],
   "schedules": [
@@ -37,6 +66,116 @@
       "status": "Open",
       "id_trainer": 2,
       "title": "Групповой пилатес"
+    },
+    {
+      "id": 2,
+      "date_time": "2025-04-11T10:00:00",
+      "duration": 60,
+      "level": "Beginner",
+      "max_participants": 10,
+      "status": "Open",
+      "id_trainer": 2,
+      "title": "Утренний пилатес"
+    },
+    {
+      "id": 3,
+      "date_time": "2025-04-11T19:00:00",
+      "duration": 75,
+      "level": "Intermediate",
+      "max_participants": 6,
+      "status": "Open",
+      "id_trainer": 4,
+      "title": "Интенсивный пилатес"
+    },
+    {
+      "id": 4,
+      "date_time": "2025-04-12T09:00:00",
+      "duration": 60,
+      "level": "Beginner",
+      "max_participants": 8,
+      "status": "Open",
+      "id_trainer": 5,
+      "title": "Пилатес для спины"
+    },
+    {
+      "id": 5,
+      "date_time": "2025-04-12T18:30:00",
+      "duration": 90,
+      "level": "Advanced",
+      "max_participants": 5,
+      "status": "Open",
+      "id_trainer": 4,
+      "title": "Продвинутый пилатес"
+    },
+    {
+      "id": 6,
+      "date_time": "2025-04-13T11:00:00",
+      "duration": 60,
+      "level": "Intermediate",
+      "max_participants": 8,
+      "status": "Open",
+      "id_trainer": 2,
+      "title": "Классический пилатес"
+    },
+    {
+      "id": 7,
+      "date_time": "2025-04-13T17:00:00",
+      "duration": 60,
+      "level": "Beginner",
+      "max_participants": 10,
+      "status": "Open",
+      "id_trainer": 5,
+      "title": "Пилатес для начинающих"
+    },
+    {
+      "id": 8,
+      "date_time": "2025-04-14T10:30:00",
+      "duration": 75,
+      "level": "Intermediate",
+      "max_participants": 6,
+      "status": "Open",
+      "id_trainer": 4,
+      "title": "Силовой пилатес"
+    },
+    {
+      "id": 9,
+      "date_time": "2025-04-14T19:00:00",
+      "duration": 60,
+      "level": "Beginner",
+      "max_participants": 8,
+      "status": "Open",
+      "id_trainer": 2,
+      "title": "Вечерний пилатес"
+    },
+    {
+      "id": 10,
+      "date_time": "2025-04-15T09:00:00",
+      "duration": 90,
+      "level": "Advanced",
+      "max_participants": 5,
+      "status": "Open",
+      "id_trainer": 4,
+      "title": "Мастер-класс по пилатесу"
+    },
+    {
+      "id": 11,
+      "date_time": "2025-04-15T16:00:00",
+      "duration": 60,
+      "level": "Intermediate",
+      "max_participants": 8,
+      "status": "Open",
+      "id_trainer": 5,
+      "title": "Пилатес для здоровья спины"
+    },
+    {
+      "id": 12,
+      "date_time": "2025-04-16T18:00:00",
+      "duration": 75,
+      "level": "Intermediate",
+      "max_participants": 6,
+      "status": "Open",
+      "id_trainer": 2,
+      "title": "Групповой пилатес на реформере"
     }
   ],
   "subscriptions": [
@@ -49,6 +188,26 @@
       "end_date": "2025-06-01",
       "price": 5000,
       "id_client": 1
+    },
+    {
+      "id": 2,
+      "type": "10 занятий",
+      "sessions_total": 10,
+      "sessions_left": 10,
+      "start_date": "2025-04-01",
+      "end_date": "2025-07-01",
+      "price": 9000,
+      "id_client": "1208"
+    },
+    {
+      "id": "a925",
+      "type": "Подарочный (10 занятий)",
+      "sessions_total": 10,
+      "sessions_left": 6,
+      "start_date": "2025-11-18",
+      "end_date": "2026-02-16",
+      "price": 0,
+      "id_client": "1208"
     }
   ],
   "bookings": [
@@ -58,6 +217,38 @@
       "status": "Confirmed",
       "id_client": 1,
       "id_schedule": 1
+    },
+    {
+      "id": "6b6b",
+      "id_client": "1208",
+      "id_schedule": 1,
+      "id_subscription": "a925",
+      "status": "Confirmed",
+      "booking_date": "2025-11-18T18:48:10.732Z"
+    },
+    {
+      "id": "6a31",
+      "id_client": "1208",
+      "id_schedule": 2,
+      "id_subscription": "a925",
+      "status": "Confirmed",
+      "booking_date": "2025-11-18T18:48:22.109Z"
+    },
+    {
+      "id": "f6a3",
+      "id_client": "1208",
+      "id_schedule": 3,
+      "id_subscription": "a925",
+      "status": "Confirmed",
+      "booking_date": "2025-11-18T18:48:24.763Z"
+    },
+    {
+      "id": "dd58",
+      "id_client": "1208",
+      "id_schedule": 4,
+      "id_subscription": "a925",
+      "status": "Confirmed",
+      "booking_date": "2025-11-18T18:48:38.526Z"
     }
   ],
   "feedbacks": [

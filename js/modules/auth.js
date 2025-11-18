@@ -125,7 +125,21 @@ export const Auth = (() => {
     const result = await Data.addUser(newUser);
 
     if (result) {
-      UI.showNotification('Регистрация успешна! Войдите в систему');
+      // Создаём подарковый абонемент на 10 занятий для нового клиента
+      if (result.role === 'client' && result.id) {
+        const giftSubscription = {
+          type: 'Подарочный (10 занятий)',
+          sessions_total: 10,
+          sessions_left: 10,
+          start_date: new Date().toISOString().split('T')[0],
+          end_date: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // +90 дней
+          price: 0,
+          id_client: result.id
+        };
+        await Data.addSubscription(giftSubscription);
+      }
+      
+      UI.showNotification('Регистрация успешна! Вам подарен абонемент на 10 занятий. Войдите в систему');
       showLoginForm({ preventDefault: () => {} });
     } else {
       UI.showNotification('Ошибка регистрации. Убедитесь, что json-server запущен.');
