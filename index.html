@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rejoice — Пилатес на реформере</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Уведомление -->
+  <div class="notification" id="notification"></div>
+
+  <!-- Модальное окно входа -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <h2>Вход</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="login">Логин</label>
+          <input type="email" id="login" class="form-control" required placeholder="example@example.com">
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input type="password" id="password" class="form-control" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn">Войти</button>
+        <p style="margin-top:10px;font-size:14px;">
+          Нет аккаунта? 
+          <a href="#" id="showRegisterLink" style="color:#F35D51;cursor:pointer;">Зарегистрироваться</a>
+        </p>
+      </form>
+
+      <!-- Форма регистрации -->
+      <form id="registerForm" style="display:none;">
+        <h3>Регистрация</h3>
+        <div class="form-group">
+          <label>Имя</label>
+          <input type="text" id="regName" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Логин (email)</label>
+          <input type="email" id="regLogin" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" id="regPassword" class="form-control" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label>Телефон</label>
+          <input type="tel" id="regPhone" class="form-control" required>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;margin-top:10px;gap:10px;">
+          <button type="submit" class="btn">Зарегистрироваться</button>
+          <a href="#" id="showLoginLink" style="color:#F35D51;cursor:pointer;">Вернуться к входу</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Шапка -->
+  <header>
+    <div class="container header-content">
+      <a href="index.html" class="logo">Rejoice</a>
+      <nav>
+        <a href="index.html">Главная</a>
+        <a href="schedule.html">Расписание</a>
+        <a href="trainer.html">Тренеры</a>
+        <a href="profile.html" id="profileBtn" style="display:none;">Личный кабинет</a>
+        <a href="admin.html" id="adminBtn" style="display:none;">Админ-панель</a>
+      </nav>
+      <div class="user-menu" style="display:flex;align-items:center;gap:10px;">
+        <div id="notificationIcon" style="display:none;position:relative;cursor:pointer;font-size:24px;"></div>
+        <button id="loginBtn">Войти</button>
+        <button id="logoutBtn" style="display:none;">Выйти</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Герой-блок -->
+  <section class="hero" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:white;text-align:center;padding:80px 20px;margin:30px 0;">
+    <h1>Пилатес на реформере</h1>
+    <p style="font-size:18px;margin:20px 0;">Для силы, гибкости и здоровья спины</p>
+    <a href="schedule.html" class="btn">Записаться на занятие</a>
+  </section>
+
+  <!-- Наши преимущества (по центру) -->
+  <section class="container" style="margin:40px auto; text-align: center; display: flex; flex-direction: column; align-items: center;">
+    <h2 style="margin-bottom: 30px;">Наши преимущества</h2>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;max-width:1200px;margin:0 auto;width:100%;">
+      <div style="flex:1;min-width:250px;max-width:350px;background:white;padding:20px;border-radius:10px;text-align:center;box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+        <h3>Персональный подход</h3>
+        <p>Каждое занятие адаптировано под ваш уровень и цели.</p>
+      </div>
+      <div style="flex:1;min-width:250px;max-width:350px;background:white;padding:20px;border-radius:10px;text-align:center;box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+        <h3>Профессиональные тренеры</h3>
+        <p>Сертифицированные инструкторы с опытом работы от 5 лет.</p>
+      </div>
+      <div style="flex:1;min-width:250px;max-width:350px;background:white;padding:20px;border-radius:10px;text-align:center;box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+        <h3>Удобное расположение</h3>
+        <p>Центр города, удобная парковка, метро рядом.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Футер -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Rejoice — Студия пилатеса на реформере</p>
+      <p>г. Москва, ул. Пилатеса, д. 1</p>
+      <div class="footer-links">
+        <a href="#">Контакты</a>
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Условия использования</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

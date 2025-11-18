@@ -1,0 +1,126 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "login": "client@rejoice.ru",
+      "password": "123456",
+      "role": "client",
+      "name": "Анна Иванова",
+      "email": "anna@example.com",
+      "phone": "+79991234567"
+    },
+    {
+      "id": 2,
+      "login": "trainer@rejoice.ru",
+      "password": "123456",
+      "role": "trainer",
+      "name": "Мария Сидорова",
+      "specialization": "Реформер",
+      "experience": 5,
+      "rating": 4.8
+    },
+    {
+      "id": 3,
+      "login": "admin@rejoice.ru",
+      "password": "123456",
+      "role": "admin",
+      "name": "Иван Петров"
+    }
+  ],
+  "schedules": [
+    {
+      "id": 1,
+      "date_time": "2025-04-10T18:00:00",
+      "duration": 60,
+      "level": "Beginner",
+      "max_participants": 8,
+      "status": "Open",
+      "id_trainer": 2,
+      "title": "Групповой пилатес"
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": 1,
+      "type": "5 sessions",
+      "sessions_total": 5,
+      "sessions_left": 3,
+      "start_date": "2025-04-01",
+      "end_date": "2025-06-01",
+      "price": 5000,
+      "id_client": 1
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1,
+      "booking_date": "2025-04-05T10:30:00",
+      "status": "Confirmed",
+      "id_client": 1,
+      "id_schedule": 1
+    }
+  ],
+  "feedbacks": [
+    {
+      "id": 1,
+      "id_client": 1,
+      "subject": "Проблема с записью",
+      "message": "Не могу отменить запись за 24 часа.",
+      "date_sent": "2025-04-05T12:00:00",
+      "status": "В обработке"
+    }
+  ],
+  "subscription_types": [
+    {
+      "id": 1,
+      "name": "5 занятий",
+      "sessions": 5,
+      "price": 5000
+    },
+    {
+      "id": 2,
+      "name": "10 занятий",
+      "sessions": 10,
+      "price": 9000
+    },
+    {
+      "id": 3,
+      "name": "Месячный (неограниченно)",
+      "sessions": null,
+      "price": 8000
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "recipient_id": 1,
+      "message": "Напоминаем: вы записаны на пилатес завтра в 18:00",
+      "date_sent": "2025-04-09T18:00:00",
+      "read": false
+    },
+    {
+      "id": "61b3",
+      "recipient_id": 1,
+      "title": "123",
+      "message": "123",
+      "date_sent": "2025-11-18T16:23:17.409Z",
+      "read": false
+    },
+    {
+      "id": "adf9",
+      "recipient_id": 2,
+      "title": "123",
+      "message": "123",
+      "date_sent": "2025-11-18T16:23:17.409Z",
+      "read": false
+    }
+  ],
+  "reports": [
+    {
+      "id": 1,
+      "type": "attendance",
+      "period": "2025-04-01 - 2025-04-07",
+      "data": "..."
+    }
+  ]
+}

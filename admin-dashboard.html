@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Админ-панель — Rejoice</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+  <header>
+    <div class="container header-content">
+      <a href="index.html" class="logo">Rejoice</a>
+      <nav>
+        <a href="index.html">Главная</a>
+        <a href="schedule.html">Расписание</a>
+        <a href="profile.html">Личный кабинет</a>
+        <a href="admin-dashboard.html">Админ-панель</a>
+      </nav>
+      <div class="user-menu">
+        <button id="logoutBtn">Выйти</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Админ-панель</h1>
+
+    <!-- Управление расписанием -->
+    <section>
+      <h2>Управление расписанием</h2>
+      <table id="adminScheduleList"></table>
+    </section>
+
+    <!-- Управление абонементами -->
+    <section>
+      <h2>Типы абонементов</h2>
+      <table id="adminSubscriptionTypesList"></table>
+    </section>
+
+    <!-- Отчёты -->
+    <section>
+      <h2>Отчёты</h2>
+      <div id="adminReportsList"></div>
+    </section>
+
+    <!-- Обратная связь -->
+    <section>
+      <h2>Обратная связь</h2>
+      <table id="adminFeedbackList"></table>
+    </section>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

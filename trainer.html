@@ -1,0 +1,107 @@
+<!-- trainer.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Тренеры — Rejoice</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Уведомление -->
+  <div class="notification" id="notification"></div>
+
+  <!-- Модальное окно входа -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <h2>Вход</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="login">Логин</label>
+          <input type="email" id="login" class="form-control" required placeholder="example@example.com">
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input type="password" id="password" class="form-control" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn">Войти</button>
+        <p style="margin-top:10px;font-size:14px;">
+          Нет аккаунта? 
+          <a href="#" id="showRegisterLink" style="color:#F35D51;cursor:pointer;">Зарегистрироваться</a>
+        </p>
+      </form>
+
+      <!-- Форма регистрации -->
+      <form id="registerForm" style="display:none;">
+        <h3>Регистрация</h3>
+        <div class="form-group">
+          <label>Имя</label>
+          <input type="text" id="regName" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Логин (email)</label>
+          <input type="email" id="regLogin" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" id="regPassword" class="form-control" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label>Телефон</label>
+          <input type="tel" id="regPhone" class="form-control" required>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;margin-top:10px;gap:10px;">
+          <button type="submit" class="btn">Зарегистрироваться</button>
+          <a href="#" id="showLoginLink" style="color:#F35D51;cursor:pointer;">Вернуться к входу</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Шапка -->
+  <header>
+    <div class="container header-content">
+      <a href="index.html" class="logo">Rejoice</a>
+      <nav>
+        <a href="index.html">Главная</a>
+        <a href="schedule.html">Расписание</a>
+        <a href="trainer.html">Тренеры</a>
+        <a href="profile.html" id="profileBtn" style="display:none;">Личный кабинет</a>
+        <a href="admin.html" id="adminBtn" style="display:none;">Админ-панель</a>
+      </nav>
+      <div class="user-menu" style="display:flex;align-items:center;gap:10px;">
+        <div id="notificationIcon" style="display:none;position:relative;cursor:pointer;font-size:24px;"></div>
+        <button id="loginBtn">Войти</button>
+        <button id="logoutBtn" style="display:none;">Выйти</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Список тренеров -->
+  <section class="container" style="margin:40px 0;">
+    <h2>Наши тренеры</h2>
+    <p>Профессиональные инструкторы с многолетним опытом</p>
+
+    <div id="trainersList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin:30px 0;">
+      <!-- Тренеры будут добавлены через JS -->
+    </div>
+  </section>
+
+  <!-- Футер -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Rejoice — Студия пилатеса на реформере</p>
+      <p>г. Москва, ул. Пилатеса, д. 1</p>
+      <div class="footer-links">
+        <a href="#">Контакты</a>
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Условия использования</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
