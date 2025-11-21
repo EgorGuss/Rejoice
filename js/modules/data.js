@@ -1,7 +1,8 @@
 // js/modules/data.js
-
-const API_BASE = 'http://localhost:3000';
-
+const isGitHubPages = window.location.hostname.endsWith('.github.io');
+const API_BASE = isGitHubPages
+  ? 'https://egorguss.github.io/Rejoice/' // Заменить на реальные
+  : 'http://localhost:3000';
 const request = async (path, options = {}, fallback = null) => {
   try {
     const response = await fetch(`${API_BASE}${path}`, options);
