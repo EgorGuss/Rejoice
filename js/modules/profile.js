@@ -39,9 +39,9 @@ export const Profile = (() => {
     document.getElementById('editUserEmail').value = currentUser.email || currentUser.login || '';
     document.getElementById('editUserPhone').value = currentUser.phone || '';
 
-    await loadMyBookings();
+    await loadMyBookings(); // Только предстоящие
     await loadSubscriptions();
-    await loadHistory();
+    await loadHistory();     // Только прошедшие
     await loadFeedback();
     setupFeedbackForm();
     setupProfileEdit();
@@ -123,7 +123,7 @@ export const Profile = (() => {
     });
   };
 
-  // Загрузить мои записи (будущие записи)
+  // Загрузить мои записи (только предстоящие)
   const loadMyBookings = async () => {
     if (!Auth.currentUser) return;
 
@@ -141,6 +141,7 @@ export const Profile = (() => {
         const schedule = schedules.find(s => String(s.id) === String(b.id_schedule));
         if (!schedule) return false;
         const scheduleDate = new Date(schedule.date_time);
+        // Отображаем только "Confirmed" и только если дата >= сегодня
         return scheduleDate >= now && b.status === 'Confirmed';
       });
 
@@ -231,7 +232,7 @@ export const Profile = (() => {
     }
   };
 
-  // Загрузить историю посещений
+  // Загрузить историю посещений (только прошедшие)
   const loadHistory = async () => {
     if (!Auth.currentUser) return;
 
@@ -243,13 +244,13 @@ export const Profile = (() => {
       const schedules = await Data.getSchedules();
       const trainers = await Data.getTrainers();
 
-      // Фильтруем только прошедшие записи
+      // Фильтруем только прошедшие записи (дата < сегодня)
       const now = new Date();
       const pastBookings = bookings.filter(b => {
         const schedule = schedules.find(s => String(s.id) === String(b.id_schedule));
         if (!schedule) return false;
         const scheduleDate = new Date(schedule.date_time);
-        return scheduleDate < now;
+        return scheduleDate < now; // Только прошедшие
       });
 
       if (pastBookings.length === 0) {
@@ -380,7 +381,8 @@ export const Profile = (() => {
 
     if (success) {
       showNotification('Запись отменена');
-      await loadMyBookings();
+      await loadMyBookings(); // Обновляем список предстоящих
+      await loadHistory();    // Обновляем историю (на случай если отменили сегодняшнюю)
     } else {
       showNotification('Не удалось отменить запись');
     }

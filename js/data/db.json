@@ -176,6 +176,26 @@
       "status": "Open",
       "id_trainer": 2,
       "title": "Групповой пилатес на реформере"
+    },
+    {
+      "id": "f77b",
+      "title": "123",
+      "date_time": "2025-11-21T11:00",
+      "duration": 120,
+      "level": "Beginner",
+      "max_participants": 5,
+      "id_trainer": 2,
+      "status": "Open"
+    },
+    {
+      "id": "d044",
+      "title": "1",
+      "date_time": "2025-11-21T13:03",
+      "duration": 120,
+      "level": "Beginner",
+      "max_participants": 123,
+      "id_trainer": 2,
+      "status": "Open"
     }
   ],
   "subscriptions": [
@@ -208,6 +228,16 @@
       "end_date": "2026-02-16",
       "price": 0,
       "id_client": "1208"
+    },
+    {
+      "id": "4674",
+      "type": "Подарочный (10 занятий)",
+      "sessions_total": 10,
+      "sessions_left": 6,
+      "start_date": "2025-11-21",
+      "end_date": "2026-02-19",
+      "price": 0,
+      "id_client": 1
     }
   ],
   "bookings": [
@@ -249,6 +279,38 @@
       "id_subscription": "a925",
       "status": "Confirmed",
       "booking_date": "2025-11-18T18:48:38.526Z"
+    },
+    {
+      "id": "06f5",
+      "id_client": 1,
+      "id_schedule": 2,
+      "id_subscription": "4674",
+      "status": "Confirmed",
+      "booking_date": "2025-11-21T10:02:27.235Z"
+    },
+    {
+      "id": "c997",
+      "id_client": 1,
+      "id_schedule": 7,
+      "id_subscription": "4674",
+      "status": "Confirmed",
+      "booking_date": "2025-11-21T10:04:16.825Z"
+    },
+    {
+      "id": "4a97",
+      "id_client": 1,
+      "id_schedule": 12,
+      "id_subscription": "4674",
+      "status": "Confirmed",
+      "booking_date": "2025-11-21T10:04:19.024Z"
+    },
+    {
+      "id": "a95e",
+      "id_client": 1,
+      "id_schedule": 6,
+      "id_subscription": "4674",
+      "status": "Confirmed",
+      "booking_date": "2025-11-21T10:09:31.082Z"
     }
   ],
   "feedbacks": [
@@ -303,6 +365,30 @@
       "title": "123",
       "message": "123",
       "date_sent": "2025-11-18T16:23:17.409Z",
+      "read": false
+    },
+    {
+      "id": "7c56",
+      "recipient_id": 2,
+      "title": "22",
+      "message": "123123",
+      "date_sent": "2025-11-21T08:59:02.269Z",
+      "read": false
+    },
+    {
+      "id": "02d0",
+      "recipient_id": 4,
+      "title": "22",
+      "message": "123123",
+      "date_sent": "2025-11-21T08:59:02.269Z",
+      "read": false
+    },
+    {
+      "id": "4ada",
+      "recipient_id": 5,
+      "title": "22",
+      "message": "123123",
+      "date_sent": "2025-11-21T08:59:02.269Z",
       "read": false
     }
   ],

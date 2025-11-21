@@ -7,6 +7,7 @@ import { Trainers } from './modules/trainers.js';
 import { TrainerProfile } from './modules/trainer-profile.js';
 import { Notifications } from './modules/notifications.js';
 import { Admin } from './modules/admin.js';
+import { Trainer } from './modules/trainer.js'; // <-- Новый импорт
 
 document.addEventListener('auth:changed', async (event) => {
   if (event.detail) {
@@ -22,6 +23,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (Auth.currentUser) {
     await Notifications.init();
+
+    // Инициализация тренерского модуля, если пользователь - тренер
+    if (Auth.currentUser.role === 'trainer') {
+      await Trainer.init();
+    }
   }
 
   const path = window.location.pathname;

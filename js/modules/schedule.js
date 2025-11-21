@@ -151,6 +151,12 @@ export const Schedule = (() => {
         >
           ${buttonConfig.label}
         </button>
+        ${canEditSchedule(schedule) ? `
+        <div style="display:flex;gap:5px;margin-top:10px;">
+          <button class="btn-secondary edit-schedule-btn" data-schedule-id="${schedule.id}" style="flex:1;">Редактировать</button>
+          <button class="btn-danger delete-schedule-btn" data-schedule-id="${schedule.id}" style="flex:1;">Удалить</button>
+        </div>
+        ` : ''}
       `;
 
       list.appendChild(card);
@@ -158,6 +164,13 @@ export const Schedule = (() => {
 
     attachButtonHandlers();
     renderPagination();
+  };
+
+  const canEditSchedule = (schedule) => {
+    if (!Auth.currentUser) return false;
+    if (Auth.currentUser.role === 'admin') return true;
+    if (Auth.currentUser.role === 'trainer' && Number(schedule.id_trainer) === Number(Auth.currentUser.id)) return true;
+    return false;
   };
 
   const getBookedCount = (scheduleId) =>
@@ -252,6 +265,67 @@ export const Schedule = (() => {
         Auth.openLoginModal();
       });
     });
+
+    // Обработчики для кнопок редактирования и удаления
+    list.querySelectorAll('.edit-schedule-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const scheduleId = Number(btn.dataset.scheduleId);
+        openEditScheduleModal(scheduleId);
+      });
+    });
+
+    list.querySelectorAll('.delete-schedule-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const scheduleId = Number(btn.dataset.scheduleId);
+        if (confirm('Удалить это занятие?')) {
+          handleDeleteSchedule(scheduleId);
+        }
+      });
+    });
+  };
+
+  const openEditScheduleModal = async (scheduleId) => {
+    const schedule = schedules.find(s => s.id === scheduleId);
+    if (!schedule) return;
+
+    const modal = document.getElementById('scheduleModal');
+    if (!modal) {
+      // Если модального окна нет, создадим его
+      createScheduleModal();
+    }
+
+    document.getElementById('scheduleModalTitle').textContent = 'Редактировать занятие';
+    document.getElementById('scheduleId').value = schedule.id; // Скрытое поле для ID
+    document.getElementById('scheduleTitle').value = schedule.title;
+    document.getElementById('scheduleDateTime').value = new Date(schedule.date_time).toISOString().slice(0, 16);
+    document.getElementById('scheduleDuration').value = schedule.duration;
+    document.getElementById('scheduleLevel').value = schedule.level;
+    document.getElementById('scheduleMaxParticipants').value = schedule.max_participants;
+    document.getElementById('scheduleStatus').value = schedule.status;
+
+    // Заполняем тренеров
+    const trainerSelect = document.getElementById('scheduleTrainer');
+    trainerSelect.innerHTML = '';
+    trainers.forEach(trainer => {
+      const option = document.createElement('option');
+      option.value = trainer.id;
+      option.textContent = trainer.name;
+      if (Number(trainer.id) === Number(schedule.id_trainer)) option.selected = true;
+      trainerSelect.appendChild(option);
+    });
+
+    UI.openModal(modal);
+  };
+
+  const handleDeleteSchedule = async (scheduleId) => {
+    const success = await Data.deleteSchedule(scheduleId);
+    if (success) {
+      UI.showNotification('Занятие удалено');
+      await refreshData();
+      renderSchedule();
+    } else {
+      UI.showNotification('Ошибка удаления');
+    }
   };
 
   const handleBooking = async (scheduleId) => {
@@ -412,6 +486,106 @@ export const Schedule = (() => {
     indicator.textContent = `${currentPage} / ${totalPages}`;
     pagination.appendChild(indicator);
     pagination.appendChild(nextBtn);
+  };
+
+  // Создание модального окна для редактирования (если его нет)
+  const createScheduleModal = () => {
+    const modalHtml = `
+      <div class="modal-overlay" id="scheduleModal" style="display:none;">
+        <div class="modal">
+          <span class="modal-close" id="scheduleModalClose">&times;</span>
+          <h2 id="scheduleModalTitle">Добавить занятие</h2>
+          <form id="scheduleForm">
+            <input type="hidden" id="scheduleId">
+            <div class="form-group">
+              <label>Название</label>
+              <input type="text" id="scheduleTitle" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Дата и время</label>
+              <input type="datetime-local" id="scheduleDateTime" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Длительность (минуты)</label>
+              <input type="number" id="scheduleDuration" class="form-control" required min="30" step="15">
+            </div>
+            <div class="form-group">
+              <label>Уровень</label>
+              <select id="scheduleLevel" class="form-control" required>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Максимум участников</label>
+              <input type="number" id="scheduleMaxParticipants" class="form-control" required min="1">
+            </div>
+            <div class="form-group">
+              <label>Тренер</label>
+              <select id="scheduleTrainer" class="form-control" required>
+                <!-- Заполнится через JS -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Статус</label>
+              <select id="scheduleStatus" class="form-control" required>
+                <option value="Open">Открыто</option>
+                <option value="Closed">Закрыто</option>
+                <option value="Cancelled">Отменено</option>
+              </select>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:15px;">
+              <button type="submit" class="btn">Сохранить</button>
+              <button type="button" id="cancelScheduleBtn" class="btn-secondary">Отмена</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    const modal = document.getElementById('scheduleModal');
+    const form = document.getElementById('scheduleForm');
+    const closeBtn = document.getElementById('scheduleModalClose');
+    const cancelBtn = document.getElementById('cancelScheduleBtn');
+
+    closeBtn.addEventListener('click', () => UI.closeModal(modal));
+    cancelBtn.addEventListener('click', () => UI.closeModal(modal));
+    form.addEventListener('submit', handleScheduleFormSubmit);
+  };
+
+  const handleScheduleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById('scheduleId').value;
+    const title = document.getElementById('scheduleTitle').value;
+    const date_time = document.getElementById('scheduleDateTime').value;
+    const duration = document.getElementById('scheduleDuration').value;
+    const level = document.getElementById('scheduleLevel').value;
+    const max_participants = document.getElementById('scheduleMaxParticipants').value;
+    const id_trainer = document.getElementById('scheduleTrainer').value;
+    const status = document.getElementById('scheduleStatus').value;
+
+    const scheduleData = { title, date_time, duration, level, max_participants, id_trainer, status };
+
+    let result;
+    if (id) {
+      // Редактирование
+      result = await Data.updateSchedule(id, scheduleData);
+    } else {
+      // Добавление
+      result = await Data.addSchedule(scheduleData);
+    }
+
+    if (result) {
+      UI.showNotification(id ? 'Занятие обновлено' : 'Занятие добавлено');
+      UI.closeModal(document.getElementById('scheduleModal'));
+      await refreshData();
+      renderSchedule();
+    } else {
+      UI.showNotification('Ошибка сохранения');
+    }
   };
 
   return { init, refreshData };

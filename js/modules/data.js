@@ -84,7 +84,7 @@ export const Data = {
     return bookings?.[0] || null;
   },
   addBooking: (bookingData) => sendJson('/bookings', 'POST', bookingData, null),
-  updateBooking: (id, bookingData) => sendJson(`/bookings/${id}`, 'PATCH', bookingData, null),
+  updateBooking: (id, bookingData) => sendJson(`/bookings/${id}`, 'PATCH', bookingData, null), // <-- Новая функция
   deleteBooking: (id) => request(`/bookings/${id}`, { method: 'DELETE' }, false),
 
   // Обратная связь
